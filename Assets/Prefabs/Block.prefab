@@ -377,3 +377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae13eded6c1c209b5a0e987ac4d88be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceToTravel: 2
+  speed: 0.1
+  cellW: 0.8
+  cellH: 0.8
+  cellOffset: 0.005

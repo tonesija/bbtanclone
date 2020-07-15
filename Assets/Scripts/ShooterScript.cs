@@ -7,6 +7,8 @@ public class ShooterScript : MonoBehaviour
     public float angle = 90.0f;
     public float shootingRate = 0.2f; // how long it waits between shooting two balls
     public Transform ball;
+
+    private MenagerScript menagerScript;
     
     private int numOfBalls;
     private float timeWaited;
@@ -23,6 +25,8 @@ public class ShooterScript : MonoBehaviour
 
         aspectRatio = (float)Screen.height/Screen.width;
         Debug.Log(aspectRatio);
+
+        menagerScript = GameObject.Find("LevelMenager").GetComponent<MenagerScript>();
     }
 
     // Update is called once per frame
@@ -61,6 +65,8 @@ public class ShooterScript : MonoBehaviour
         if(state == 3){
             if(transform.childCount == 0){
                 state = 0;
+                menagerScript.addNewRowToList();
+                menagerScript.moveRow();
             }
         }
     }
