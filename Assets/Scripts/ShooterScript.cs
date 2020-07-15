@@ -9,6 +9,7 @@ public class ShooterScript : MonoBehaviour
     public Transform ball;
     
     private int numOfBalls;
+    private int score;
     private float timeWaited;
     private int counter;
 
@@ -17,6 +18,7 @@ public class ShooterScript : MonoBehaviour
     void Start()
     {
         state = 0;
+        score = 0;
         numOfBalls = 1;
         timeWaited = 0.0f;
         counter = 0;
@@ -60,6 +62,7 @@ public class ShooterScript : MonoBehaviour
 
         if(state == 3){
             if(transform.childCount == 0){
+                score++;
                 state = 0;
             }
         }
