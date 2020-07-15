@@ -11,7 +11,7 @@ public class BlockScript : MonoBehaviour
     {
         health = 20;
         tm = GetComponentInChildren<TextMeshPro>();
-        tm.SetText(health + "");
+        tm.SetText(health.ToString());
     }
 
 
