@@ -16,9 +16,14 @@ public class GridableObject : MonoBehaviour
     public float ViewportWidth = 5.625f;
     public float ViewportHeight = 10.0f;
     private Vector2 tempVector;
+
+    private int gridX;
+    private int gridY;
     
     void Awake()
     {
+        gridY = -1;
+        gridX = -1;
         rb = GetComponent<Rigidbody2D>(); 
 
         cellW = ViewportWidth/MenagerScript.ROWSIZE;
@@ -30,27 +35,40 @@ public class GridableObject : MonoBehaviour
 
     void Update(){
         if(move){
-            rb.MovePosition(new Vector2(rb.position.x, rb.position.y - speed));
+            //rb.MovePosition(new Vector2(rb.position.x, rb.position.y - speed));
+            Vector2 curr = this.gameObject.transform.position;
+            this.gameObject.transform.position = new Vector2(curr.x, curr.y - speed);
             distance += speed;
         }
 
         if(distance >= distanceToTravel){
-            rb.MovePosition(new Vector2(rb.position.x, tempVector.y - distanceToTravel));
+            gridY++;
+            setGridPosition(gridY, gridX);
+            //rb.MovePosition(new Vector2(rb.position.x, tempVector.y - distanceToTravel));
             move = false;
             distance = 0;
         }
     }
     public void moveDown(){
         move = true;
-        tempVector = rb.position;
+        //tempVector = rb.position;
     }
 
 
     public void setGridPosition(int row, int column){
-        float x = (column - 1) * cellW - (ViewportWidth - cellW)/2.0f;
-        float y = (row + 1) * cellH + (ViewportHeight - cellH)/2.0f ;
+        gridX = column;
+        gridY = row;
+        float x = (column) * cellW - (ViewportWidth - cellW)/2.0f;
+        float y = -(row) * distanceToTravel + (ViewportHeight - distanceToTravel)/2.0f ;
 
-        //rb.MovePosition(new Vector2(x, y));
         this.gameObject.transform.position = new Vector3(x, y, 0.0f);
+    }
+
+    public int getGridX(){
+        return gridX;
+    }
+
+    public int getGridY(){
+        return gridY;
     }
 }

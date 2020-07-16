@@ -5,6 +5,8 @@ using UnityEngine;
 public class MenagerScript : MonoBehaviour
 {   
     public static int ROWSIZE = 7;
+
+    public static int COLUMNSIZE = 12;
     private List<GridableObject> objs;
     public GameObject originalBlock;
     public GameObject TLTriangle;
@@ -16,11 +18,15 @@ public class MenagerScript : MonoBehaviour
     private int counter = 0;
     public bool canShootFlag = true;
     private int health = 1;
+
+    private bool[,] grid;
     // Start is called before the first frame update
     void Start()
     {
+        grid = new bool[COLUMNSIZE, ROWSIZE];
         objs = new List<GridableObject>();
-        addNewRowToList(1);
+        freeGrid();
+        addNewRowToList(0);
         moveRow();
     }
 
@@ -47,7 +53,6 @@ public class MenagerScript : MonoBehaviour
 
     public void addNewRowToList(int row){
         int AddBallCoinPosition = (int) Random.Range(0.0f, (float) ROWSIZE - 0.000001f);
-        Debug.Log("AddBallPosition: " + AddBallCoinPosition);
 
         for(int i = 0; i < ROWSIZE; ++i){
 
@@ -88,12 +93,44 @@ public class MenagerScript : MonoBehaviour
                     BlockScript script = block.GetComponent<BlockScript>();
                     script.setHealth(health);
                 }
-                gridable.setGridPosition(row, i + 1);
+                gridable.setGridPosition(row, i);
 
                 objs.Add(gridable);
             }
 
+
         }
+        changeGridStatus();
         health++;
+    }
+
+    private void changeGridStatus(){
+        freeGrid();
+        foreach(GridableObject obj in objs){
+            int gridX = obj.getGridX();
+            int gridY = obj.getGridY();
+
+            grid[gridX, gridY] = true;
+        }
+    }
+
+    private void freeGrid(){
+       for(int i = 0; i < ROWSIZE; ++i){
+           for(int j = 0; j < COLUMNSIZE; ++j){
+               grid[j, i] = false;
+           }
+       }
+    }
+
+    private void printGridSize(){
+        int size = 0;
+       for(int i = 0; i < ROWSIZE; ++i){
+           for(int j = 0; j < COLUMNSIZE; ++j){
+               if(grid[j, i]){
+                   size++;
+               }
+           }
+       }
+       Debug.Log("Grid size: " + size);
     }
 }
