@@ -135,5 +135,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  Velocity: 250
+  Velocity: 450
   rb: {fileID: 777164947170103221}

@@ -37,7 +37,6 @@ public class ShooterScript : MonoBehaviour
         arrow = transform.Find("Arrow").gameObject;
 
         aspectRatio = (float)Screen.height/Screen.width;
-        Debug.Log(aspectRatio);
 
         menagerScript = GameObject.Find("LevelMenager").GetComponent<MenagerScript>();
     }
@@ -45,7 +44,6 @@ public class ShooterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(state);
 
         if(Input.GetMouseButton(0) && state == 0){
             state = 1;
@@ -74,6 +72,9 @@ public class ShooterScript : MonoBehaviour
                 angle += Mathf.PI;
             }
 
+            float MouseOffLength = Mathf.Sqrt(MouseXOff*MouseXOff + MouseYOff*MouseYOff);
+            arrow.transform.localScale = new Vector3(2.0f, 1.5f + MouseOffLength, 1.0f);
+            arrow.transform.localPosition = new Vector3(0.0f, 5 + MouseOffLength * 4.0f, 0.0f);
             if(MouseYOff <= 0.0f){
                 arrow.GetComponent<SpriteRenderer>().enabled = false;
             }else{

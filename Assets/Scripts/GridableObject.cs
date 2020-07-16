@@ -24,7 +24,7 @@ public class GridableObject : MonoBehaviour
         cellW = ViewportWidth/MenagerScript.ROWSIZE;
         cellH = cellW;
         distanceToTravel = cellH;
-        Debug.Log(distanceToTravel);
+        // Debug.Log(distanceToTravel);
         speed = distanceToTravel/20.0f;
     }
 
@@ -32,7 +32,6 @@ public class GridableObject : MonoBehaviour
         if(move){
             rb.MovePosition(new Vector2(rb.position.x, rb.position.y - speed));
             distance += speed;
-            Debug.Log(distance);
         }
 
         if(distance >= distanceToTravel){
@@ -46,14 +45,12 @@ public class GridableObject : MonoBehaviour
         tempVector = rb.position;
     }
 
-    public void stop(){
-        rb.velocity = new Vector2(0f, 0f);
-    }
 
     public void setGridPosition(int row, int column){
         float x = (column - 1) * cellW - (ViewportWidth - cellW)/2.0f;
         float y = (row + 1) * cellH + (ViewportHeight - cellH)/2.0f ;
 
-        rb.MovePosition(new Vector2(x, y));
+        //rb.MovePosition(new Vector2(x, y));
+        this.gameObject.transform.position = new Vector3(x, y, 0.0f);
     }
 }
