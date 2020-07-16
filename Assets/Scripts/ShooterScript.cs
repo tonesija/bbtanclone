@@ -67,11 +67,19 @@ public class ShooterScript : MonoBehaviour
         if(state == 3){
             if(transform.childCount == 0){
                 score++;
-                state = 0;
-                menagerScript.addNewRowToList();
+                menagerScript.addNewRowToList(0);
                 menagerScript.moveRow();
+                state = 4;
             }
         }
+
+        if(state == 4){
+            if(menagerScript.canShootFlag){
+                state = 0;
+            }
+        }
+
+        
     }
 
     public void IncreaseNumOfBalls(){
