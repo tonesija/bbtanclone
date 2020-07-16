@@ -19,7 +19,11 @@ public class move : MonoBehaviour
     }
 
     void Update(){
-        if(transform.position.y < -4.5f){
+        if(transform.position.y < player.transform.position.y){
+            if(player.GetComponent<ShooterScript>().XNeedsChange){
+                player.GetComponent<ShooterScript>().XToChangeTo = transform.position.x;
+                player.GetComponent<ShooterScript>().XNeedsChange = false;
+            }
             Destroy(gameObject);
         }
     }

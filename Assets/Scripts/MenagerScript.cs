@@ -32,7 +32,8 @@ public class MenagerScript : MonoBehaviour
     
 
     public void moveRow(){
-        //Debug.Log("Moving objects..." + objs.Count);
+        Debug.Log("Moving objects..." + objs.Count);
+        
         foreach(GridableObject obj in objs){
             if(obj != null) obj.moveDown();
         }

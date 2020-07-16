@@ -17,6 +17,15 @@ public class ShooterScript : MonoBehaviour
 
     private int state;
     private float aspectRatio;
+    private float MouseX = 0.0f;
+    private float MouseY = 0.0f;
+    private float MouseXOff = 0.0f;
+    private float MouseYOff = 0.0f;
+    private GameObject arrow;
+
+    public bool XNeedsChange = false;
+    public float XToChangeTo = 0.0f;
+
     void Start()
     {
         state = 0;
@@ -24,6 +33,8 @@ public class ShooterScript : MonoBehaviour
         numOfBalls = 1;
         timeWaited = 0.0f;
         counter = 0;
+
+        arrow = transform.Find("Arrow").gameObject;
 
         aspectRatio = (float)Screen.height/Screen.width;
         Debug.Log(aspectRatio);
@@ -34,24 +45,59 @@ public class ShooterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButton(0) && (state == 0 || state == 1)){
+        Debug.Log(state);
+
+        if(Input.GetMouseButton(0) && state == 0){
             state = 1;
-            float MouseX = Input.mousePosition.x/Screen.width-.5f;
-            float MouseY = Input.mousePosition.y/Screen.width-.1f*(aspectRatio/2.0f);
-            angle = Mathf.Atan(MouseY/MouseX);
-            if(MouseX < 0.0f){
+            MouseX = Input.mousePosition.x/Screen.width;
+            MouseY = Input.mousePosition.y/Screen.width;
+
+            arrow.GetComponent<SpriteRenderer>().enabled = true;
+        }
+
+        if(Input.GetMouseButton(0) && state == 1){
+            float InputX = Input.mousePosition.x/Screen.width;
+            float InputY = Input.mousePosition.y/Screen.width;
+            MouseXOff = MouseX - InputX;
+            MouseYOff = MouseY - InputY;
+            
+            if(MouseXOff != 0.0f){
+                angle = Mathf.Atan(MouseYOff/MouseXOff);
+            }else{
+                if(MouseYOff > 0.0f){
+                    angle = Mathf.PI/2.0f;
+                }else{
+                    angle = -Mathf.PI/2.0f;
+                }
+            }
+            if(MouseXOff < 0.0f){
                 angle += Mathf.PI;
             }
+
+            if(MouseYOff <= 0.0f){
+                arrow.GetComponent<SpriteRenderer>().enabled = false;
+            }else{
+                arrow.GetComponent<SpriteRenderer>().enabled = true;
+            }
+
+            transform.Rotate(0.0f, 0.0f, Mathf.Rad2Deg * (angle - Mathf.PI) - transform.rotation.eulerAngles.z + 90.0f, Space.Self);
         }
 
         if(!Input.GetMouseButton(0) && state == 1){
-            state = 2;
-            counter = 0;
+            if(MouseYOff > 0.0f){
+                state = 2;
+                counter = 0;
+                XNeedsChange = true;
+            }else{
+                state = 0;
+                counter = 0;
+                XNeedsChange = false;
+            }
         }
 
         if(state == 2){
             if(timeWaited == 0.0f){
-                var prefabObject = Instantiate(ball, new Vector3(0.0f, -4.5f, 0.0f), Quaternion.identity);
+                var prefabObject = Instantiate(ball, new Vector3(transform.position.x, transform.position.y, 0.0f), Quaternion.identity);
                 prefabObject.transform.parent = gameObject.transform;
                 counter++;
             }
@@ -65,8 +111,11 @@ public class ShooterScript : MonoBehaviour
         }
 
         if(state == 3){
-            if(transform.childCount == 0){
+            if(transform.childCount < 2){
                 score++;
+                
+                arrow.GetComponent<SpriteRenderer>().enabled = false;
+                transform.SetPositionAndRotation(new Vector3(XToChangeTo, transform.position.y, 0.0f), Quaternion.identity);
                 menagerScript.addNewRowToList(0);
                 menagerScript.moveRow();
                 state = 4;
