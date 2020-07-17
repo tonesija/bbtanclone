@@ -45,6 +45,13 @@ public class MenagerScript : MonoBehaviour
                 canShootFlag = true;
             }
         }
+
+        bool gameEnded = false;
+        for(int i=0; i<ROWSIZE; i++){
+            gameEnded |= grid[COLUMNSIZE-2, i];
+        }
+
+        GameObject.Find("UIManager").GetComponent<UIManagerScript>().gameEnded = gameEnded;
     }
 
     
