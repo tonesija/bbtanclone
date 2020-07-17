@@ -114,6 +114,9 @@ public class ShooterScript : MonoBehaviour
         if(state == 3){
             if(transform.childCount < 2){
                 score++;
+                if(score > PlayerPrefs.GetInt("HighScore", 0)){
+                    PlayerPrefs.SetInt("HighScore", score);
+                }
                 
                 arrow.GetComponent<SpriteRenderer>().enabled = false;
                 transform.SetPositionAndRotation(new Vector3(XToChangeTo, transform.position.y, 0.0f), Quaternion.identity);

@@ -8,9 +8,15 @@ public class move : MonoBehaviour
     public float Velocity = 5.0f;
     public Rigidbody2D rb;
 
+    public int WallCollisionThreshold = 10;
+    private int wallCollisionCounter = 0;
+    
+
+    private MenagerScript menagerScript;
 
     void Start()
     {
+        menagerScript = GameObject.Find("LevelMenager").GetComponent<MenagerScript>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
 
@@ -26,6 +32,22 @@ public class move : MonoBehaviour
             }
             Destroy(gameObject);
         }
+
+    }
+
+    void OnCollisionEnter2D(Collision2D other){
+
+        if(other.gameObject.tag != "BlockTag"){
+            wallCollisionCounter++;
+        }else{
+            wallCollisionCounter = 0;
+        }
+
+        if(wallCollisionCounter >= WallCollisionThreshold){
+            menagerScript.addBouncerByPosition(transform.position.y);
+            wallCollisionCounter = 0;
+        }
+
     }
 
 }

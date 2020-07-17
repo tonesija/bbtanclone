@@ -137,3 +137,4 @@ MonoBehaviour:
   player: {fileID: 0}
   Velocity: 450
   rb: {fileID: 777164947170103221}
+  WallCollisionThreshold: 20

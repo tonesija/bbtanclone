@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 601517280}
   m_Layer: 9
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: WallTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1011,8 +1011,9 @@ MonoBehaviour:
   verLazerOriginal: {fileID: 8599010955450265901, guid: 2637347938c992840b251126959c4e92,
     type: 3}
   BouncerChance: 0.2
-  LazerChance: 1
+  LazerChance: 0.2
   canShootFlag: 1
+  bouncerFlag: 0
 --- !u!4 &1976621843
 Transform:
   m_ObjectHideFlags: 0

@@ -29,9 +29,13 @@ public class MenagerScript : MonoBehaviour
 
     private int counter = 0;
     public bool canShootFlag = true;
+    public bool bouncerFlag = true;
     private int health = 1;
 
     private bool[,] grid;
+
+    private float bouncerFlagTimer = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +59,15 @@ public class MenagerScript : MonoBehaviour
         bool gameEnded = false;
         for(int i=0; i<ROWSIZE; i++){
             gameEnded |= grid[COLUMNSIZE-2, i];
+        }
+
+        if(!bouncerFlag){
+            bouncerFlagTimer += Time.deltaTime;
+
+            if(bouncerFlagTimer > 5.0f){
+                bouncerFlag = true;
+                bouncerFlagTimer = 0.0f;
+            }
         }
 
         GameObject.Find("UIManager").GetComponent<UIManagerScript>().gameEnded = gameEnded;
@@ -138,6 +151,7 @@ public class MenagerScript : MonoBehaviour
         maybeCreateVerLazer(LazerChance);
 
         health++;
+        //bouncerFlag = true;
     }
 
     private void changeGridStatus(){
@@ -233,6 +247,15 @@ public class MenagerScript : MonoBehaviour
         }
     }
 
+    public void addBouncerByPosition(float yPosition){
+        if(bouncerFlag){
+            GameObject bouncer = Instantiate(bouncerOriginal);
+            bouncer.transform.position = new Vector2(0.0f, yPosition);
+            temporaryObjs.Add(bouncer);
+            bouncerFlag = false;
+        }
+    }
+
 
     //updates grid, destroys temp objects and cleans the temporaryObjs list
     private void destroyTempObjects(){
@@ -241,7 +264,7 @@ public class MenagerScript : MonoBehaviour
             GridableObject script = obj.GetComponent<GridableObject>();
             int x = script.getGridX();
             int y = script.getGridY();
-            grid[y, x] = false;
+            if(x != -1) grid[y, x] = false;
             Destroy(obj);
         }
         for(int i = temporaryObjs.Count - 1; i >= 0; --i){

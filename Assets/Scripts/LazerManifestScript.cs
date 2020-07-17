@@ -10,7 +10,7 @@ public class LazerManifestScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag.Equals("BlockTag")){
             BlockScript blockScript = other.gameObject.GetComponent<BlockScript>();
-            blockScript.setHealth(blockScript.getHealth() - 1);
+            blockScript.takeDamage();
         }
     }
 

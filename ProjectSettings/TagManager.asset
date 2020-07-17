@@ -6,6 +6,7 @@ TagManager:
   tags:
   - AddBallTag
   - BlockTag
+  - WallTag
   layers:
   - Default
   - TransparentFX

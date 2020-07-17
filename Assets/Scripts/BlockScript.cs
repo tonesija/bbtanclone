@@ -44,11 +44,18 @@ public class BlockScript : MonoBehaviour
         this.health = health;
         maxHealth = health;
         tm.SetText(health.ToString());
-        updateColors();
+        
+    }
 
+    public void takeDamage(){
+        health--;
+        
         if(health == 0){
             Destroy(this.gameObject);
         }
+        
+        tm.SetText(health.ToString());
+        updateColors();
     }
 
     private void updateColors(){
@@ -56,9 +63,6 @@ public class BlockScript : MonoBehaviour
         tm.color = sr.color;
     }
 
-    public int getHealth(){
-        return health;
-    }
 
 
     
