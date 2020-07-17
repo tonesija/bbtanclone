@@ -627,6 +627,10 @@ MonoBehaviour:
     type: 3}
   horLazerOriginal: {fileID: 7150213575776059585, guid: 5401d6c652d5f4a42b6413104af305bf,
     type: 3}
+  verLazerOriginal: {fileID: 8599010955450265901, guid: 2637347938c992840b251126959c4e92,
+    type: 3}
+  BouncerChance: 0.2
+  LazerChance: 0.2
   canShootFlag: 1
 --- !u!4 &1976621843
 Transform:
@@ -640,7 +644,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5497615308679581710
 PrefabInstance:
@@ -692,7 +696,7 @@ PrefabInstance:
     - target: {fileID: 5497615308530292997, guid: a35b561d2b024ba4084a5072f1494773,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5497615308530292997, guid: a35b561d2b024ba4084a5072f1494773,
         type: 3}

@@ -20,6 +20,12 @@ public class MenagerScript : MonoBehaviour
     public GameObject bouncerOriginal;
 
     public GameObject horLazerOriginal;
+    public GameObject verLazerOriginal;
+
+    [Range(0.0f, 1.0f)]
+    public float BouncerChance = 0.2f;
+    [Range(0.0f, 1.0f)]
+    public float LazerChance = 0.2f;
 
     private int counter = 0;
     public bool canShootFlag = true;
@@ -119,8 +125,9 @@ public class MenagerScript : MonoBehaviour
         }
         changeGridStatus();
 
-        maybeCreateBouncer(1f);
-        maybeCreateLazer(1f);
+        maybeCreateBouncer(BouncerChance);
+        maybeCreateHorLazer(LazerChance);
+        maybeCreateVerLazer(LazerChance);
 
         health++;
     }
@@ -191,7 +198,7 @@ public class MenagerScript : MonoBehaviour
         }
     }
 
-    private void maybeCreateLazer(float chance){
+    private void maybeCreateHorLazer(float chance){
         if(chance > Random.Range(0f, 1f)){
             GridSpot toPut = getRandomAvailableSpot(7);
 
@@ -202,6 +209,19 @@ public class MenagerScript : MonoBehaviour
             temporaryObjs.Add(lazer);
         }
     }
+
+    private void maybeCreateVerLazer(float chance){
+        if(chance > Random.Range(0f, 1f)){
+            GridSpot toPut = getRandomAvailableSpot(7);
+
+            GameObject lazer = Instantiate(verLazerOriginal);
+            GridableObject script = lazer.GetComponent<GridableObject>();
+            script.setGridPosition(toPut.getY() + 1, toPut.getX());
+
+            temporaryObjs.Add(lazer);
+        }
+    }
+
 
     //updates grid, destroys temp objects and cleans the temporaryObjs list
     private void destroyTempObjects(){
