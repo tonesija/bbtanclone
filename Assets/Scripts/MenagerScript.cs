@@ -66,7 +66,15 @@ public class MenagerScript : MonoBehaviour
         //Debug.Log("Moving objects..." + objs.Count);
         
         foreach(GridableObject obj in objs){
-            if(obj != null) obj.moveDown();
+            if(obj != null && obj.gameObject.GetComponent<AddBall>() != null){
+                if(obj.getGridY() == COLUMNSIZE - 2){
+                    Destroy(obj.gameObject);
+                    grid[obj.getGridY(), obj.getGridX()] = false;
+                    continue;
+                }
+            }
+
+            if(obj != null) obj.moveDown();  
         }
         canShootFlag = false;
     }
