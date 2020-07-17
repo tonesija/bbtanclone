@@ -129,10 +129,19 @@ public class ShooterScript : MonoBehaviour
             }
         }
 
+        // if state is equal to 5, that means the game is over
         
     }
 
     public void IncreaseNumOfBalls(){
         numOfBalls++;
+    }
+
+    public void setState(int n){
+        state = n;
+    }
+
+    public int getScore(){
+        return score;
     }
 }
