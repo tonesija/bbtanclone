@@ -8,6 +8,8 @@ public class BlockScript : MonoBehaviour
     private int maxHealth;
     private TextMeshPro tm;
     private SpriteRenderer sr;
+
+    private AudioSource PopSound;
     
     void Awake()
     {
@@ -16,12 +18,15 @@ public class BlockScript : MonoBehaviour
         tm.SetText(health.ToString());
         sr.color = Color.HSVToRGB(0.94f, 0.87f, 0.96f);
         tm.color = sr.color;
+        PopSound = GameObject.Find("PopSound").GetComponent<AudioSource>();
     }
 
 
     void OnCollisionEnter2D(Collision2D other) {
         
         health--;
+
+        PopSound.Play();
 
         updateColors();
         
