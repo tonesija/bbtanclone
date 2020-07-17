@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7944115340662130128}
   - component: {fileID: 7933984127145701924}
   - component: {fileID: 533029343723928868}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Vertical Lazer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
