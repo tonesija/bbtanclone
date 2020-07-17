@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8817438829508314776}
   - component: {fileID: 7405629213147630373}
   - component: {fileID: -3267672837269717122}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Randomizer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
