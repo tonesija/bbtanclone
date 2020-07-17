@@ -193,6 +193,7 @@ public class MenagerScript : MonoBehaviour
             GameObject bouncer = Instantiate(bouncerOriginal);
             GridableObject script = bouncer.GetComponent<GridableObject>();
             script.setGridPosition(toPut.getY() + 1, toPut.getX());
+            grid[toPut.getY(), toPut.getX()] = true;
 
             temporaryObjs.Add(bouncer);
         }
@@ -205,6 +206,7 @@ public class MenagerScript : MonoBehaviour
             GameObject lazer = Instantiate(horLazerOriginal);
             GridableObject script = lazer.GetComponent<GridableObject>();
             script.setGridPosition(toPut.getY() + 1, toPut.getX());
+            grid[toPut.getY(), toPut.getX()] = true;
 
             temporaryObjs.Add(lazer);
         }
@@ -217,6 +219,7 @@ public class MenagerScript : MonoBehaviour
             GameObject lazer = Instantiate(verLazerOriginal);
             GridableObject script = lazer.GetComponent<GridableObject>();
             script.setGridPosition(toPut.getY() + 1, toPut.getX());
+            grid[toPut.getY(), toPut.getX()] = true;
 
             temporaryObjs.Add(lazer);
         }
