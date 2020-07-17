@@ -19,6 +19,8 @@ public class MenagerScript : MonoBehaviour
 
     public GameObject bouncerOriginal;
 
+    public GameObject horLazerOriginal;
+
     private int counter = 0;
     public bool canShootFlag = true;
     private int health = 1;
@@ -60,7 +62,6 @@ public class MenagerScript : MonoBehaviour
         destroyTempObjects();
         cleanObjsList();
 
-        maybeCreateBouncer(0.1f);
         int AddBallCoinPosition = (int) Random.Range(0.0f, (float) ROWSIZE - 0.000001f);
 
         for(int i = 0; i < ROWSIZE; ++i){
@@ -110,6 +111,10 @@ public class MenagerScript : MonoBehaviour
 
         }
         changeGridStatus();
+
+        maybeCreateBouncer(1f);
+        maybeCreateLazer(1f);
+
         health++;
     }
 
@@ -151,15 +156,43 @@ public class MenagerScript : MonoBehaviour
        Debug.Log("Grid size: " + size);
     }
 
+    private string matrix(){
+        string toReturn = "";
+        for(int i = 0; i < ROWSIZE; ++i){
+            toReturn += "\n";
+           for(int j = 0; j < COLUMNSIZE; ++j){
+               
+               if(grid[j, i]){
+                   toReturn += "1";
+               } else{
+                   toReturn += "0";
+               }
+           }
+       }
+       return toReturn;
+    }
+
     private void maybeCreateBouncer(float chance){
         if(chance > Random.Range(0f, 1f)){
-            GridSpot toPut = getRandomAvailableSpot(8);
+            GridSpot toPut = getRandomAvailableSpot(7);
 
             GameObject bouncer = Instantiate(bouncerOriginal);
             GridableObject script = bouncer.GetComponent<GridableObject>();
-            script.setGridPosition(toPut.getY(), toPut.getX());
+            script.setGridPosition(toPut.getY() + 1, toPut.getX());
 
             temporaryObjs.Add(bouncer);
+        }
+    }
+
+    private void maybeCreateLazer(float chance){
+        if(chance > Random.Range(0f, 1f)){
+            GridSpot toPut = getRandomAvailableSpot(7);
+
+            GameObject lazer = Instantiate(horLazerOriginal);
+            GridableObject script = lazer.GetComponent<GridableObject>();
+            script.setGridPosition(toPut.getY() + 1, toPut.getX());
+
+            temporaryObjs.Add(lazer);
         }
     }
 

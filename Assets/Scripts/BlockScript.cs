@@ -23,8 +23,7 @@ public class BlockScript : MonoBehaviour
         
         health--;
 
-        sr.color = Color.HSVToRGB(0.94f-0.3f*(1.0f-(health/(float)maxHealth)), 0.87f, 0.96f);
-        tm.color = sr.color;
+        updateColors();
         
         if(health == 0){
             Destroy(this.gameObject);
@@ -40,6 +39,20 @@ public class BlockScript : MonoBehaviour
         this.health = health;
         maxHealth = health;
         tm.SetText(health.ToString());
+        updateColors();
+
+        if(health == 0){
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void updateColors(){
+        sr.color = Color.HSVToRGB(0.94f-0.3f*(1.0f-(health/(float)maxHealth)), 0.87f, 0.96f);
+        tm.color = sr.color;
+    }
+
+    public int getHealth(){
+        return health;
     }
 
 
