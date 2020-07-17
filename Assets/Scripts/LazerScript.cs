@@ -8,10 +8,15 @@ public class LazerScript : MonoBehaviour
     public GameObject lazer;
 
     public bool IsHorizontal = true;
+    private AudioSource LazerSound;
+    private void Awake(){
+        LazerSound = GameObject.Find("LazerSound").GetComponent<AudioSource>();
+    }
 
-   void OnTriggerEnter2D(Collider2D other) {
+    void OnTriggerEnter2D(Collider2D other) {
        if(other.gameObject.tag.Equals("Ball")){
             GameObject newLazer = Instantiate(lazer);
+            LazerSound.Play();
 
             GridableObject lazerGridScript = newLazer.GetComponent<GridableObject>();
             GridableObject btnGridScript = this.gameObject.GetComponent<GridableObject>();
