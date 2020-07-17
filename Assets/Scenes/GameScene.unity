@@ -347,6 +347,8 @@ MonoBehaviour:
     type: 3}
   AddBallCoin: {fileID: 983833625820968998, guid: 9239dcffee3b94642a4527203d62b3a7,
     type: 3}
+  bouncerOriginal: {fileID: 8817438829508314777, guid: 812cdb5a27ec8cc6790db9317a715e85,
+    type: 3}
   canShootFlag: 1
 --- !u!4 &1976621843
 Transform:

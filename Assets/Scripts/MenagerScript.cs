@@ -8,12 +8,16 @@ public class MenagerScript : MonoBehaviour
 
     public static int COLUMNSIZE = 12;
     private List<GridableObject> objs;
+
+    private List<GameObject> temporaryObjs;
     public GameObject originalBlock;
     public GameObject TLTriangle;
     public GameObject TRTriangle;
     public GameObject BLTriangle;
     public GameObject BRTriangle;
     public GameObject AddBallCoin;
+
+    public GameObject bouncerOriginal;
 
     private int counter = 0;
     public bool canShootFlag = true;
@@ -25,6 +29,7 @@ public class MenagerScript : MonoBehaviour
     {
         grid = new bool[COLUMNSIZE, ROWSIZE];
         objs = new List<GridableObject>();
+        temporaryObjs = new List<GameObject>();
         freeGrid();
         addNewRowToList(0);
         moveRow();
@@ -52,6 +57,10 @@ public class MenagerScript : MonoBehaviour
     }
 
     public void addNewRowToList(int row){
+        destroyTempObjects();
+        cleanObjsList();
+
+        maybeCreateBouncer(0.1f);
         int AddBallCoinPosition = (int) Random.Range(0.0f, (float) ROWSIZE - 0.000001f);
 
         for(int i = 0; i < ROWSIZE; ++i){
@@ -110,7 +119,15 @@ public class MenagerScript : MonoBehaviour
             int gridX = obj.getGridX();
             int gridY = obj.getGridY();
 
-            grid[gridX, gridY] = true;
+            grid[gridY, gridX] = true;
+        }
+    }
+
+    private void cleanObjsList(){
+        for(int i = objs.Count - 1; i >= 0; --i){
+            if(objs[i] == null){
+                objs.RemoveAt(i);
+            }
         }
     }
 
@@ -132,5 +149,61 @@ public class MenagerScript : MonoBehaviour
            }
        }
        Debug.Log("Grid size: " + size);
+    }
+
+    private void maybeCreateBouncer(float chance){
+        if(chance > Random.Range(0f, 1f)){
+            GridSpot toPut = getRandomAvailableSpot(8);
+
+            GameObject bouncer = Instantiate(bouncerOriginal);
+            GridableObject script = bouncer.GetComponent<GridableObject>();
+            script.setGridPosition(toPut.getY(), toPut.getX());
+
+            temporaryObjs.Add(bouncer);
+        }
+    }
+
+    //updates grid, destroys temp objects and cleans the temporaryObjs list
+    private void destroyTempObjects(){
+
+        foreach(GameObject obj in temporaryObjs){
+            GridableObject script = obj.GetComponent<GridableObject>();
+            int x = script.getGridX();
+            int y = script.getGridY();
+            grid[y, x] = false;
+            Destroy(obj);
+        }
+        for(int i = temporaryObjs.Count - 1; i >= 0; --i){
+            temporaryObjs.RemoveAt(i);
+        }
+    }
+
+    private GridSpot getRandomAvailableSpot(int maxYTreshold){
+        while(true){
+            int x = Random.Range(0, ROWSIZE);
+            int y = Random.Range(0, maxYTreshold);
+
+            if(!grid[y, x]){
+                GridSpot toReturn = new GridSpot(x, y);
+                return toReturn;
+            }
+        }
+    }
+
+    private struct GridSpot{
+
+        public GridSpot(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+        int x;
+        int y;
+
+        public int getX(){
+            return x;
+        }
+        public int getY(){
+            return y;
+        }
     }
 }
